@@ -1,0 +1,77 @@
+---
+import Image from "astro/components/Image.astro";
+import clsx from "clsx";
+import { motion } from "framer-motion";
+
+import posterImage from "@/assets/poster.png";
+import { CheckpointButton } from "@/components/checkpoint-button";
+import { Button } from "@/components/ui/button";
+import { engine } from "@/engine";
+import Layout from "@/layouts/Layout.astro";
+
+const instance = await engine.firstInstance;
+
+if (instance === undefined) {
+  throw new Error("No first instance found!");
+}
+---
+
+<Layout title="Labyrinth">
+  <main>
+    <div class:list={["relative", "sm:space-y-8", "sm:my-8"]}>
+      <Image
+        src={posterImage}
+        alt="Labyrinth"
+        class:list={["block", "object-cover", "sm:container"]}
+      />
+      <motion.div
+        client:load
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.75 }}
+        transition={{ type: "spring", stiffness: 75 }}
+        className={clsx([
+          "container",
+          "absolute",
+          "left-0",
+          "right-0",
+          "bottom-4",
+          "sm:text-center",
+          "z-10",
+          "flex",
+          "justify-between",
+          "items-center",
+          "sm:block",
+        ])}
+      >
+        <div class:list={["sm:mb-2"]}>
+          <a href={`/instance/${instance.hash}`}>
+            <Button>처음부터</Button>
+          </a>
+          <CheckpointButton client:only="react">
+            <Button variant="secondary">이어하기</Button>
+          </CheckpointButton>
+        </div>
+        <div>
+          <a
+            href="/connection"
+            class:list={clsx("text-sm", "text-white", "underline")}
+            >포스텍 재학생이신가요?</a
+          >
+        </div>
+      </motion.div>
+      <div
+        class:list={[
+          "animate-pulse",
+          "absolute",
+          "w-full h-32",
+          "bottom-0",
+          "bg-gradient-to-t from-[#b9e1ff]/25 to-blue-0",
+          "z-0",
+          "sm:hidden",
+        ]}
+      >
+      </div>
+    </div>
+  </main>
+</Layout>

@@ -1,0 +1,101 @@
+---
+import type { HTMLAttributes } from "astro/types";
+
+type Props = HTMLAttributes<"footer">;
+
+const { ...props } = Astro.props;
+---
+
+<footer {...props}>
+  <hr class:list={["m-0"]} />
+  <div class:list={["container"]}>
+    <h1 class:list={["my-8"]}>
+      <span class:list={["text-base"]}>LAB.YRINTH</span>
+    </h1>
+    <div
+      class:list={["my-8", "grid", "grid-cols-1", "sm:grid-cols-2", "gap-4"]}
+    >
+      <div>
+        <h2 class:list={["text-sm"]}>Sites</h2>
+        <ul class:list={["my-4", "space-y-2"]}>
+          <li>
+            <a
+              class:list={[
+                "text-sm",
+                "transition-colors",
+                "hover:text-primary",
+                "text-muted-foreground",
+              ]}
+              href="https://postech.ac.kr"
+            >
+              POSTECH
+            </a>
+          </li>
+          <li>
+            <a
+              class:list={[
+                "text-sm",
+                "transition-colors",
+                "hover:text-primary",
+                "text-muted-foreground",
+              ]}
+              href="https://sciencewar.postech.ac.kr"
+            >
+              POSTECH-KAIST 학생대제전
+            </a>
+          </li>
+          <li>
+            <a
+              class:list={[
+                "text-sm",
+                "transition-colors",
+                "hover:text-primary",
+                "text-muted-foreground",
+              ]}
+              href="https://plus.or.kr"
+            >
+              PLUS
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div>
+        <h2 class:list={["text-sm"]}>Social</h2>
+        <ul class:list={["my-4", "space-y-2"]}>
+          <li>
+            <a
+              class:list={[
+                "text-sm",
+                "transition-colors",
+                "hover:text-primary",
+                "text-muted-foreground",
+              ]}
+              href="https://www.instagram.com/poka.sciencewar/"
+            >
+              Instagram
+            </a>
+          </li>
+          <li>
+            <a
+              class:list={[
+                "text-sm",
+                "transition-colors",
+                "hover:text-primary",
+                "text-muted-foreground",
+              ]}
+              href="https://github.com/betarixm/labyrinth"
+            >
+              GitHub
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <hr class:list={["m-0"]} />
+  <div class:list={["my-3", "container"]}>
+    <span class:list={["text-xs", "text-muted-foreground", "font-light"]}>
+      POSTECH-KAIST SCIENCE WAR
+    </span>
+  </div>
+</footer>

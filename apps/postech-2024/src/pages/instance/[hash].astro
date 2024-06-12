@@ -1,0 +1,74 @@
+---
+import type { GetStaticPaths, InferGetStaticPropsType } from "astro";
+
+import { Instance } from "@labyrinth/labyrinth";
+import clsx from "clsx";
+import { JSDOM } from "jsdom";
+
+import { InstanceView } from "@/components/instance-view";
+import { engine } from "@/engine";
+import Layout from "@/layouts/Layout.astro";
+
+export const getStaticPaths = (async () => {
+  const allHashes = await engine.allHashes;
+
+  return await Promise.all(
+    allHashes.map(async (hash) => ({
+      params: { hash },
+      props: {
+        instance: await engine.instanceByHash(hash),
+      },
+    }))
+  );
+}) satisfies GetStaticPaths;
+
+type Props = InferGetStaticPropsType<typeof getStaticPaths>;
+
+const { instance } = Astro.props as Props;
+
+if (instance === undefined) {
+  return new Response(null, {
+    status: 404,
+  });
+}
+
+const { __html, body, ...subInstance } = instance;
+
+const hintHtml = ({ __html }: { __html: string }) =>
+  hintTag(new JSDOM(__html))?.innerHTML;
+
+const bodyHtml = ({ __html }: { __html: string }) => {
+  const dom = new JSDOM(__html);
+  hintTag(dom)?.remove();
+  return dom.window.document.body.innerHTML;
+};
+
+const hintTag = (dom: JSDOM) => dom.window.document.querySelector("hint");
+---
+
+<Layout title="Labyrinth">
+  <main class:list={["bg-background", "my-8"]}>
+    <InstanceView.Root className={clsx("container", "mb-8")}>
+      <InstanceView.Body instance={{ __html: bodyHtml(instance) }} />
+      <InstanceView.Tracker instance={subInstance} client:only="react" />
+    </InstanceView.Root>
+    {
+      !Instance.isClosing({ variant: subInstance.variant }) && (
+        <InstanceView.FloatingCard>
+          <InstanceView.Form instance={subInstance} client:load>
+            <InstanceView.Hint
+              title="Hint"
+              client:only="react"
+              disabled={hintHtml(instance) === undefined}
+            >
+              <div
+                class:list={["prose", "prose-invert"]}
+                set:html={hintHtml(instance)}
+              />
+            </InstanceView.Hint>
+          </InstanceView.Form>
+        </InstanceView.FloatingCard>
+      )
+    }
+  </main>
+</Layout>

@@ -1,0 +1,49 @@
+---
+import type { HTMLAttributes } from "astro/types";
+
+type Props = HTMLAttributes<"header">;
+
+const { ...props } = Astro.props;
+---
+
+<header {...props}>
+  <div
+    class:list={[
+      "container",
+      "my-3",
+      "flex",
+      "justify-between",
+      "items-center",
+    ]}
+  >
+    <a class:list={["text-base"]} href="/"> LAB.YRINTH </a>
+    <a
+      id="connect"
+      class:list={[
+        "text-base",
+        "underline",
+        "text-muted-foreground",
+        "text-sm",
+      ]}
+      href="/connection"
+    >
+      Connect
+    </a>
+  </div>
+  <hr class:list={["m-0"]} />
+  <script>
+    import { username } from "@/stores";
+
+    const connect = document.getElementById("connect");
+
+    username.subscribe((value) => {
+      if (connect !== null) {
+        if (value !== "") {
+          connect.innerHTML = value;
+        } else {
+          connect.innerHTML = "Connect";
+        }
+      }
+    });
+  </script>
+</header>

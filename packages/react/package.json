@@ -1,0 +1,21 @@
+{
+  "name": "@labyrinth/react",
+  "module": "index.ts",
+  "type": "module",
+  "dependencies": {
+    "@hookform/resolvers": "^3.6.0",
+    "@labyrinth/labyrinth": "workspace:*",
+    "react-hook-form": "^7.52.0",
+    "swr": "^2.2.5",
+    "ts-pattern": "^5.2.0",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  }
+}

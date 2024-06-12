@@ -1,0 +1,38 @@
+---
+import { ConnectionManager } from "@/components/connection-manager";
+import { Card } from "@/components/ui/card";
+import Layout from "@/layouts/Layout.astro";
+
+type Props = {};
+
+const {} = Astro.props as Props;
+---
+
+<Layout title="Labyrinth">
+  <main
+    class:list={[
+      "bg-background",
+      "my-8",
+      "prose",
+      "prose-invert",
+      "max-w-none",
+    ]}
+  >
+    <h1 class:list={["container"]}>Connection</h1>
+    <div class:list={["container"]}>
+      <Card>
+        <div class:list={["p-4"]}>
+          <ConnectionManager client:only="react" />
+          <hr class:list={["my-4"]} />
+          <p class:list={["text-muted-foreground", "text-sm", "mb-0"]}>
+            포스텍 재학생은 "연결" 버튼을 통해 학번을 입력하여 이벤트 참여
+            자격을 신청할 수 있습니다. 제출된 학번 및 이벤트 진행 정보는 서버에
+            안전하게 저장되며, 이는 귀하께서 개인정보(학번)와 관련된 정보의
+            수집, 이용 및 보관에 동의하신 것으로 간주됩니다. 수집된 개인정보는
+            이벤트 종료 후 관련 법률에 따라 지체 없이 안전하게 파기됩니다.
+          </p>
+        </div>
+      </Card>
+    </div>
+  </main>
+</Layout>
